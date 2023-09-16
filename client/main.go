@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"time"
 
@@ -11,6 +12,7 @@ import (
 )
 
 func main() {
+	t := time.Now()
 	conn, err := grpc.Dial("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
@@ -22,7 +24,26 @@ func main() {
 	defer cancel()
 	r, err := c.GetAllUsers(ctx, &pb.GetAllUsersRequest{})
 	if err != nil {
-		log.Fatalf("could not greet: %v", err)
+		log.Fatalf("could not getAllUsers: %v", err)
 	}
-	log.Printf("GetAllUsers: %s", r)
+	fmt.Println("MSG: ", r.User)
+
+	/* 	for i := 0; i < 100; i++ {
+		_, err := c.SaveUsers(ctx, &pb.SaveUsersRequest{
+			User: &pb.User{
+				Id:       1,
+				Name:     "name",
+				Lastname: "lastName",
+				Age:      99,
+				Active:   true,
+				Money:    33999.22,
+				Saveat:   "saveAt",
+			},
+		})
+		if err != nil {
+			log.Fatalf("could not saveUsers: %v", err)
+		}
+	} */
+	fmt.Println("Elapsed: ", time.Since(t).Seconds())
+	fmt.Println("Elapsed: ", time.Since(t).Seconds())
 }

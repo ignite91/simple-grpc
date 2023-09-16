@@ -6,9 +6,11 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"os"
 
 	pb "github.com/ignite91/simple-grpc/proto"
 	"google.golang.org/grpc"
+	"google.golang.org/protobuf/proto"
 )
 
 var (
@@ -20,20 +22,32 @@ type server struct {
 	pb.UnimplementedGreeterServer
 }
 
-// SayHello implements helloworld.GreeterServer
-func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
-	return &pb.HelloReply{Message: "Hello "}, nil
-}
-
 func (s *server) GetAllUsers(ctx context.Context, in *pb.GetAllUsersRequest) (*pb.GetAllUsersReply, error) {
-	return &pb.GetAllUsersReply{
-		Id:       1,
-		Name:     "name",
-		Lastname: "lastname",
-		Age:      99,
-		Active:   true,
-		Saveat:   "timeNow",
-	}, nil
+	data, err := os.ReadFile("users.proto")
+	if err != nil {
+		panic(err)
+	}
+	out := &pb.GetAllUsersReply{}
+	err = proto.Unmarshal(data, out)
+	if err != nil {
+		panic(err)
+	}
+	return out, nil
+}
+func (s *server) SaveUsers(ctx context.Context, in *pb.SaveUsersRequest) (*pb.SaveUsersUsersReply, error) {
+	f, err := os.OpenFile("users.proto", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+	if err != nil {
+		panic(err)
+	}
+	msg, err := proto.Marshal(in)
+	if err != nil {
+		panic(err)
+	}
+	_, err = f.Write(msg)
+	if err != nil {
+		panic(err)
+	}
+	return &pb.SaveUsersUsersReply{}, nil
 }
 
 func main() {

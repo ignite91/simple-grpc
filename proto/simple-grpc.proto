@@ -1,35 +1,31 @@
 //protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative proto/simple-grpc.proto
 syntax = "proto3";
 option go_package = "github.com/ignite91/simple-grpc/proto";
-option java_multiple_files = true;
-option java_package = "io.grpc.examples.helloworld";
-option java_outer_classname = "SimpleGrpc";
 
 package simplegrpc;
 
-// The greeting service definition.
+// Service definition
 service Greeter {
-  // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
   rpc GetAllUsers (GetAllUsersRequest) returns (GetAllUsersReply) {}
+  rpc SaveUsers (SaveUsersRequest) returns (SaveUsersUsersReply) {}
 }
-
-// The request message containing the user's name.
-message HelloRequest {
-}
-
-// The response message containing the greetings
-message HelloReply {
-  string message = 1;
-}
-
-message GetAllUsersRequest {
-}
-message GetAllUsersReply {
+message User {
   int64 id = 1;
   string name = 2;
   string lastname =3;
   int32 age = 4;
   bool active = 5;
-  string saveat = 6;
+  float money = 6;
+  string saveat = 7;
+}
+message GetAllUsersRequest {
+}
+message GetAllUsersReply {
+  repeated User user = 1;
+}
+message SaveUsersRequest {
+  User user = 1;
+}
+message SaveUsersUsersReply {
+  User user = 1;
 }
