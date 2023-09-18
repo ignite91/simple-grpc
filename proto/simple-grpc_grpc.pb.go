@@ -18,122 +18,122 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// GreeterClient is the client API for Greeter service.
+// ServicesClient is the client API for Services service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type GreeterClient interface {
+type ServicesClient interface {
 	GetAllUsers(ctx context.Context, in *GetAllUsersRequest, opts ...grpc.CallOption) (*GetAllUsersReply, error)
 	SaveUsers(ctx context.Context, in *SaveUsersRequest, opts ...grpc.CallOption) (*SaveUsersUsersReply, error)
 }
 
-type greeterClient struct {
+type servicesClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewGreeterClient(cc grpc.ClientConnInterface) GreeterClient {
-	return &greeterClient{cc}
+func NewServicesClient(cc grpc.ClientConnInterface) ServicesClient {
+	return &servicesClient{cc}
 }
 
-func (c *greeterClient) GetAllUsers(ctx context.Context, in *GetAllUsersRequest, opts ...grpc.CallOption) (*GetAllUsersReply, error) {
+func (c *servicesClient) GetAllUsers(ctx context.Context, in *GetAllUsersRequest, opts ...grpc.CallOption) (*GetAllUsersReply, error) {
 	out := new(GetAllUsersReply)
-	err := c.cc.Invoke(ctx, "/simplegrpc.Greeter/GetAllUsers", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/simplegrpc.Services/GetAllUsers", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *greeterClient) SaveUsers(ctx context.Context, in *SaveUsersRequest, opts ...grpc.CallOption) (*SaveUsersUsersReply, error) {
+func (c *servicesClient) SaveUsers(ctx context.Context, in *SaveUsersRequest, opts ...grpc.CallOption) (*SaveUsersUsersReply, error) {
 	out := new(SaveUsersUsersReply)
-	err := c.cc.Invoke(ctx, "/simplegrpc.Greeter/SaveUsers", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/simplegrpc.Services/SaveUsers", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// GreeterServer is the server API for Greeter service.
-// All implementations must embed UnimplementedGreeterServer
+// ServicesServer is the server API for Services service.
+// All implementations must embed UnimplementedServicesServer
 // for forward compatibility
-type GreeterServer interface {
+type ServicesServer interface {
 	GetAllUsers(context.Context, *GetAllUsersRequest) (*GetAllUsersReply, error)
 	SaveUsers(context.Context, *SaveUsersRequest) (*SaveUsersUsersReply, error)
-	mustEmbedUnimplementedGreeterServer()
+	mustEmbedUnimplementedServicesServer()
 }
 
-// UnimplementedGreeterServer must be embedded to have forward compatible implementations.
-type UnimplementedGreeterServer struct {
+// UnimplementedServicesServer must be embedded to have forward compatible implementations.
+type UnimplementedServicesServer struct {
 }
 
-func (UnimplementedGreeterServer) GetAllUsers(context.Context, *GetAllUsersRequest) (*GetAllUsersReply, error) {
+func (UnimplementedServicesServer) GetAllUsers(context.Context, *GetAllUsersRequest) (*GetAllUsersReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllUsers not implemented")
 }
-func (UnimplementedGreeterServer) SaveUsers(context.Context, *SaveUsersRequest) (*SaveUsersUsersReply, error) {
+func (UnimplementedServicesServer) SaveUsers(context.Context, *SaveUsersRequest) (*SaveUsersUsersReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SaveUsers not implemented")
 }
-func (UnimplementedGreeterServer) mustEmbedUnimplementedGreeterServer() {}
+func (UnimplementedServicesServer) mustEmbedUnimplementedServicesServer() {}
 
-// UnsafeGreeterServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to GreeterServer will
+// UnsafeServicesServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ServicesServer will
 // result in compilation errors.
-type UnsafeGreeterServer interface {
-	mustEmbedUnimplementedGreeterServer()
+type UnsafeServicesServer interface {
+	mustEmbedUnimplementedServicesServer()
 }
 
-func RegisterGreeterServer(s grpc.ServiceRegistrar, srv GreeterServer) {
-	s.RegisterService(&Greeter_ServiceDesc, srv)
+func RegisterServicesServer(s grpc.ServiceRegistrar, srv ServicesServer) {
+	s.RegisterService(&Services_ServiceDesc, srv)
 }
 
-func _Greeter_GetAllUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Services_GetAllUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAllUsersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GreeterServer).GetAllUsers(ctx, in)
+		return srv.(ServicesServer).GetAllUsers(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/simplegrpc.Greeter/GetAllUsers",
+		FullMethod: "/simplegrpc.Services/GetAllUsers",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GreeterServer).GetAllUsers(ctx, req.(*GetAllUsersRequest))
+		return srv.(ServicesServer).GetAllUsers(ctx, req.(*GetAllUsersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Greeter_SaveUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Services_SaveUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SaveUsersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GreeterServer).SaveUsers(ctx, in)
+		return srv.(ServicesServer).SaveUsers(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/simplegrpc.Greeter/SaveUsers",
+		FullMethod: "/simplegrpc.Services/SaveUsers",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GreeterServer).SaveUsers(ctx, req.(*SaveUsersRequest))
+		return srv.(ServicesServer).SaveUsers(ctx, req.(*SaveUsersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Greeter_ServiceDesc is the grpc.ServiceDesc for Greeter service.
+// Services_ServiceDesc is the grpc.ServiceDesc for Services service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Greeter_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "simplegrpc.Greeter",
-	HandlerType: (*GreeterServer)(nil),
+var Services_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "simplegrpc.Services",
+	HandlerType: (*ServicesServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GetAllUsers",
-			Handler:    _Greeter_GetAllUsers_Handler,
+			Handler:    _Services_GetAllUsers_Handler,
 		},
 		{
 			MethodName: "SaveUsers",
-			Handler:    _Greeter_SaveUsers_Handler,
+			Handler:    _Services_SaveUsers_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

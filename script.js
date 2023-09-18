@@ -12,7 +12,7 @@ export default () => {
     plaintext: true
   });
 
-  const response = client.invoke('simplegrpc.Greeter/GetAllUsers', {});
+  const response = client.invoke('simplegrpc.Services/GetAllUsers', {});
 
   check(response, {
     'status is OK': (r) => r && r.status === grpc.StatusOK,

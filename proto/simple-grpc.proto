@@ -5,7 +5,7 @@ option go_package = "github.com/ignite91/simple-grpc/proto";
 package simplegrpc;
 
 // Service definition
-service Greeter {
+service Services {
   rpc GetAllUsers (GetAllUsersRequest) returns (GetAllUsersReply) {}
   rpc SaveUsers (SaveUsersRequest) returns (SaveUsersUsersReply) {}
 }
@@ -24,8 +24,7 @@ message GetAllUsersReply {
   repeated User user = 1;
 }
 message SaveUsersRequest {
-  User user = 1;
+  repeated User user = 1;
 }
 message SaveUsersUsersReply {
-  User user = 1;
 }
