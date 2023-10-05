@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"math"
 	"time"
 
 	pb "github.com/ignite91/simple-grpc/proto"
@@ -13,35 +14,23 @@ import (
 
 func main() {
 	t := time.Now()
-	conn, err := grpc.Dial("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("0.0.0.0:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
 	c := pb.NewServicesClient(conn)
 	ctx := context.Background()
-	/* 	r, err := c.GetAllUsers(ctx, &pb.GetAllUsersRequest{})
-	   	if err != nil {
-	   		log.Fatalf("could not getAllUsers: %v", err)
-	   	}
-	   	fmt.Println("MSG: ", r.User) */
-	in := &pb.SaveUsersRequest{
-		User: []*pb.User{{
-			Id:       1,
-			Name:     "name",
-			Lastname: "lastName",
-			Age:      99,
-			Active:   true,
-			Money:    33999.22,
-			Saveat:   "saveAt",
-		},
-		}}
-
-	for i := 0; i < 5000; i++ {
-		_, err := c.SaveUsers(ctx, in)
+	/* 	for i := 0; i < 20000; i++ {
+		_, err := c.GetOne(ctx, &pb.GetOneRequest{})
 		if err != nil {
-			log.Fatalf("could not saveUsers: %v", err)
+			log.Fatalf("could not getAllUsers: %v", err)
 		}
+	} */
+	in := &pb.GetAllRequest{}
+	_, err = c.GetAll(ctx, in, grpc.MaxCallRecvMsgSize(math.MaxInt32))
+	if err != nil {
+		log.Fatalf("could not GetAll: %v", err)
 	}
-	fmt.Println("Elapsed: ", time.Since(t).Seconds())
+	fmt.Println("Elapsed from client:", time.Since(t).Seconds())
 }

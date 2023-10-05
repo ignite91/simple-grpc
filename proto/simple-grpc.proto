@@ -6,25 +6,78 @@ package simplegrpc;
 
 // Service definition
 service Services {
-  rpc GetAllUsers (GetAllUsersRequest) returns (GetAllUsersReply) {}
-  rpc SaveUsers (SaveUsersRequest) returns (SaveUsersUsersReply) {}
+  rpc GetAll (GetAllRequest) returns (GetAllReply) {}
+  rpc GetOne (GetOneRequest) returns (GetOneReply) {}
 }
-message User {
-  int64 id = 1;
-  string name = 2;
-  string lastname =3;
-  int32 age = 4;
-  bool active = 5;
-  float money = 6;
-  string saveat = 7;
+message Model {
+	float Campo1  = 1 ;
+	float Campo2  = 2 ;
+	float Campo3  = 3 ;
+	float Campo4  = 4 ;
+	float Campo5  = 5 ;
+	float Campo6  = 6 ;
+	float Campo7  = 7 ;
+	float Campo8  = 8 ;
+	float Campo9  = 9 ;
+	float Campo10 = 10;
+	float Campo11 = 11;
+	float Campo12 = 12;
+	float Campo13 = 13;
+	float Campo14 = 14;
+	float Campo15 = 15;
+	float Campo16 = 16;
+	float Campo17 = 17;
+	float Campo18 = 18;
+	float Campo19 = 19;
+	float Campo20 = 20;
+	float Campo21 = 21;
+	float Campo22 = 22;
+	float Campo23 = 23;
+	float Campo24 = 24;
+	float Campo25 = 25;
+	float Campo26 = 26;
+	float Campo27 = 27;
+	float Campo28 = 28;
+	float Campo29 = 29;
+	float Campo30 = 30;
+	float Campo31 = 31;
+	float Campo32 = 32;
+	float Campo33 = 33;
+	float Campo34 = 34;
+	float Campo35 = 35;
+	float Campo36 = 36;
+	float Campo37 = 37;
+	float Campo38 = 38;
+	float Campo39 = 39;
+	float Campo40 = 40;
+	float Campo41 = 41;
+	float Campo42 = 42;
+	float Campo43 = 43;
+	float Campo44 = 44;
+	float Campo45 = 45;
+	float Campo46 = 46;
+	float Campo47 = 47;
+	float Campo48 = 48;
+	float Campo49 = 49;
+	float Campo50 = 50;
+	float Campo51 = 51;
+	float Campo52 = 52;
+	float Campo53 = 53;
+	float Campo54 = 54;
+	float Campo55 = 55;
+	float Campo56 = 56;
+	float Campo57 = 57;
+	float Campo58 = 58;
+	float Campo59 = 59;
+	float Campo60 = 60;
 }
-message GetAllUsersRequest {
+message GetAllRequest {
 }
-message GetAllUsersReply {
-  repeated User user = 1;
+message GetAllReply {
+  repeated Model model = 1;
 }
-message SaveUsersRequest {
-  repeated User user = 1;
+message GetOneRequest {
 }
-message SaveUsersUsersReply {
+message GetOneReply {
+  Model model = 1;
 }
